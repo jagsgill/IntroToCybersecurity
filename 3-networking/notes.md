@@ -181,6 +181,9 @@ layer 2 device called a "network switch."
 ### Layer 2
 This layer provides a connection between 2 directly connected nodes, and may provide 
 - error correction for transmission errors in the physical layer (e.g. parity bit, or cyclic redundancy check, etc) 
+  - even or odd parity bit: additional bit is set to 1 or 0 to ensure count of 1s is even/odd, depending on which parity scheme is used). Applied to each byte (1 parity + 7 data bits)
+    - e.g. even parity: **1**0101001 / after transmission 10100001. Parity bit is 1 but count of 1s is odd... meaning there was a transmission error. Typically corrected by re-transmitting the octet.
+    - TODO CRC
 - flow control - the receiver can slow down a fast sender so that it is not overwhelmed with too much data at once
 
 Protocols here define how to establish & terminate connection btw 2 _physically_ connected nodes - A-B vs A-B-C,
