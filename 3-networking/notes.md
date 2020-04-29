@@ -194,8 +194,8 @@ Nodes connected through gateways or routers (different networks) are not - that 
 #### Examples: 
 
 ##### Network Switches
-A switch is like an intelligent ethernet hub. It maintains a mapping of Ethernet-jack:MAC address.
-When a device A sends a message to device B, the message is sent only to the Ethernet connecting to device B.
+A switch is like an intelligent ethernet hub. It maintains a mapping of Ethernet-jack:MAC address in a [MAC Address Table](https://community.cisco.com/t5/networking-documents/overview-of-layer-2-switched-networks-and-communication/ta-p/3128423).
+When a device A sends a message to device B, the message is sent only to the Ethernet port connecting to device B.
 
 ##### ARP
 Address resolution protocol. 
@@ -209,7 +209,12 @@ Why is ARP needed?
 - Consider a private network/LAN with all nodes connected by a switch. You as a user know the 
 src and dst IP addresses. Your system is instructed to send a message to the dst IP address - but which machine is that?
 IP and MAC are decoupled because IP address assignments are dynamic - you can assign an IP to some node then change
-it later. For convenience, systems like DHCP can be used by nodes to obtain an IP address on the subnetwork.
+it later. IP is also at a higher level of abstraction (layer 3), so layer 2 protocols are not concerned about it. For convenience, layer 3 systems like DHCP can be used by nodes to obtain an IP address on the subnetwork.
+
+- Ethernet <-1-> MAC address <-2-> IP address
+  - 1: MAC Address Table (MAC : Ethernet Port)
+  - 2: ?
+
 Therefore a lookup scheme is needed to translate betweeen IP (layer 3) & MAC (layer 2) addresses.
 
 - When sending a message to a node outside the subnet, the src device sends it to the MAC address of a router/gateway
@@ -220,7 +225,7 @@ Note that the broadcast ARP message needs a MAC address - the broadcast MAC is f
 When performing an IP broadcast, all applicable network switches will perform a MAC broadcast as well.
 
 Basic Process:
-- Note: All layer 2 devices maintain a cache of IP:MAC mappings in an ARP lookup table
+- Note: All layer 2 devices maintain a cache of IP:MAC mappings in an ARP Lookup Table
 
 ```
 if (cache has entry for IP:MAC of interest) {
@@ -230,7 +235,7 @@ if (cache has entry for IP:MAC of interest) {
 
     ** Receive an ARP message from the node with IP X.X.X.X, "I am X.X.X.X. My MAC address is a:b:c:d:e:f"
 
-    - Both nodes cache an IP:MAC entry for each other
+    - Layer 2 nodes in the subnet cache this IP:MAC entry
 
     - Send original message to MAC with key of IP 
 }
