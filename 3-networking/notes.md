@@ -302,8 +302,23 @@ Note: the TTL prevents circular transmission of packets - typically set in units
 Routers decrement the TTL field by 1. Once TTL reaches 0, the packet is discarded and the router
 sends an ICMP Time Exceeded message back to the originator.
 
-###### tracert program
-`tracert` utilizes the TTL... explain how
+###### traceroute
+`traceroute` prints the route packets take to reach a given network host. It does this by incrementing the TTL field of network layer packets to receive ICMP Time Exceeded responses (containing IP addresses) from successive nodes in the route.
+
+```
+$ traceroute google.ca
+  traceroute to google.ca (172.217.14.195), 64 hops max, 52 byte packets
+   1  192.168.1.254 (192.168.1.254)  535.054 ms  316.353 ms  144.089 ms
+   2  10.31.54.1 (10.31.54.1)  455.156 ms  466.220 ms  207.993 ms
+   3  154.11.12.219 (154.11.12.219)  228.584 ms  204.029 ms
+      154.11.12.217 (154.11.12.217)  623.293 ms
+   4  74.125.50.110 (74.125.50.110)  454.593 ms  512.744 ms  573.179 ms
+   5  74.125.243.177 (74.125.243.177)  389.387 ms  200.582 ms
+      74.125.243.193 (74.125.243.193)  203.501 ms
+   6  209.85.254.237 (209.85.254.237)  215.466 ms  151.803 ms  213.515 ms
+   7  sea30s01-in-f3.1e100.net (172.217.14.195)  198.439 ms  148.848 ms  149.228 ms
+ ```
+
 
 
 ##### IPv6 - Internet Protocol v6
